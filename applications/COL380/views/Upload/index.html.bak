@@ -1,0 +1,3 @@
+{{extend 'layout.html'}}
+<h1>Upload Portal</h1>
+{{=BEAUTIFY(response._vars)}}
