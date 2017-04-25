@@ -1,4 +1,4 @@
-timestamp: 2017-02-25T07:00:50.719000
+timestamp: 2017-04-25T23:46:58.972961
 CREATE TABLE auth_user(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name CHAR(128),
@@ -10,21 +10,21 @@ CREATE TABLE auth_user(
     registration_id CHAR(512)
 );
 success!
-timestamp: 2017-02-25T07:00:51.970000
+timestamp: 2017-04-25T23:46:59.113235
 CREATE TABLE auth_group(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     role CHAR(512),
     description TEXT
 );
 success!
-timestamp: 2017-02-25T07:00:52.208000
+timestamp: 2017-04-25T23:46:59.249245
 CREATE TABLE auth_membership(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
     group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
 );
 success!
-timestamp: 2017-02-25T07:00:52.339000
+timestamp: 2017-04-25T23:46:59.395633
 CREATE TABLE auth_permission(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
@@ -33,7 +33,7 @@ CREATE TABLE auth_permission(
     record_id INTEGER
 );
 success!
-timestamp: 2017-02-25T07:00:52.470000
+timestamp: 2017-04-25T23:46:59.542282
 CREATE TABLE auth_event(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     time_stamp TIMESTAMP,
@@ -43,7 +43,7 @@ CREATE TABLE auth_event(
     description TEXT
 );
 success!
-timestamp: 2017-02-25T07:00:52.692000
+timestamp: 2017-04-25T23:46:59.687824
 CREATE TABLE auth_cas(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
@@ -53,144 +53,45 @@ CREATE TABLE auth_cas(
     renew CHAR(1)
 );
 success!
-timestamp: 2017-02-25T07:27:51.180000
-CREATE TABLE myfile(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    image CHAR(512)
-);
-success!
-timestamp: 2017-02-25T07:34:51.194000
+timestamp: 2017-04-25T23:46:59.841608
 CREATE TABLE UploadDB(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     UserId CHAR(512),
-    TarFile CHAR(512)
+    Name CHAR(512),
+    TarFile CHAR(512),
+    CompiledAt TIMESTAMP,
+    CompileErrorLog TEXT,
+    CompileOutLog TEXT,
+    SubmissionTime TIMESTAMP,
+    Evaluation_Started_At TIMESTAMP,
+    Evaluated_At TIMESTAMP,
+    Score INTEGER,
+    Error_Log TEXT,
+    Console TEXT,
+    Status CHAR(512)
 );
 success!
-timestamp: 2017-02-25T08:06:20.010000
-ALTER TABLE UploadDB ADD submissiontime TIMESTAMP;
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-timestamp: 2017-02-25T08:09:50.606000
-ALTER TABLE UploadDB ADD evaluatedat TIMESTAMP;
-timestamp: 2017-02-25T08:09:50.759000
-ALTER TABLE UploadDB ADD evaluationstartedat TIMESTAMP;
-success!
-timestamp: 2017-02-25T08:11:41.566000
-ALTER TABLE UploadDB ADD status CHAR(512);
-timestamp: 2017-02-25T08:11:41.755000
-ALTER TABLE UploadDB ADD console TEXT;
-timestamp: 2017-02-25T08:11:41.835000
-ALTER TABLE UploadDB ADD score INTEGER;
-timestamp: 2017-02-25T08:11:41.933000
-ALTER TABLE UploadDB ADD errorlog TEXT;
-success!
-success!
-timestamp: 2017-02-25T08:12:32.735000
-ALTER TABLE UploadDB ADD evaluation_started_at TIMESTAMP;
-timestamp: 2017-02-25T08:12:32.830000
-ALTER TABLE UploadDB ADD evaluated_at TIMESTAMP;
-timestamp: 2017-02-25T08:12:33.050000
-ALTER TABLE UploadDB ADD error_log TEXT;
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-timestamp: 2017-02-25T08:27:51.330000
-ALTER TABLE UploadDB ADD name CHAR(512);
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
-success!
+timestamp: 2017-04-26T00:22:21.699844
+ALTER TABLE UploadDB ADD testcase3log TEXT;
+timestamp: 2017-04-26T00:22:21.869648
+ALTER TABLE UploadDB ADD testcase2log TEXT;
+timestamp: 2017-04-26T00:22:22.022124
+ALTER TABLE UploadDB ADD testcase5log TEXT;
+timestamp: 2017-04-26T00:22:22.170994
+ALTER TABLE UploadDB ADD testcase4log TEXT;
+timestamp: 2017-04-26T00:22:22.324708
+ALTER TABLE UploadDB ADD testcase1log TEXT;
+success!
+timestamp: 2017-04-26T00:23:21.746983
+ALTER TABLE UploadDB ADD testcase4error TEXT;
+timestamp: 2017-04-26T00:23:21.949487
+ALTER TABLE UploadDB ADD testcase2error TEXT;
+timestamp: 2017-04-26T00:23:22.094149
+ALTER TABLE UploadDB ADD testcase1error TEXT;
+timestamp: 2017-04-26T00:23:22.242498
+ALTER TABLE UploadDB ADD testcase5error TEXT;
+timestamp: 2017-04-26T00:23:22.387401
+ALTER TABLE UploadDB ADD testcase3error TEXT;
 success!
 success!
 success!
