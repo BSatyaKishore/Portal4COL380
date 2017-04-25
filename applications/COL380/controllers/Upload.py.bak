@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # try something like
+import os
 
 @auth.requires_login()
 def index(): 
@@ -7,6 +8,15 @@ def index():
     form.vars.Name= auth.user.first_name+' '+auth.user.last_name
     if form.process().accepted:
         response.flash = 'form accepted'
+        # print the file name
+        print form.vars.TarFile
+        # Extracting Files
+        os.system("cd applications/COL380/uploads/ && mkdir "+ form.vars.TarFile[:-7] + ' && tar -xvzf '+ form.vars.TarFile + ' -C '+ form.vars.TarFile[:-7] )
+        # Update the folder according to the problem statement
+        os.system("cd applications/COL380/uploads/ && bash Main.sh "+form.vars.TarFile[:-7])
+        # Copy the folder to hpc
+        os.system("cd applications/COL380/uploads/ && scp -r " + form.vars.TarFile[:-7] + " cs5120284@hpc.iitd.ac.in:~/"+form.vars.TarFile[:-7])
+        # Compile on hpc
     elif form.errors:
         response.flash = 'form has errors'
     return locals()
