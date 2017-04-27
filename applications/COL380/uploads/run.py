@@ -12,14 +12,12 @@ fileName = str(sys.argv[1])
 print 'something'
 
 data = urllib.urlencode({'fileName':fileName,'compileO':comp_out_str, 'compileE':comp_err_str})
-req = urllib.urlopen("http://10.201.136.172:8000/COL380/API/Compile/", data)
+req = urllib.urlopen("http://10.201.137.134:8000/COL380/API/Compile/", data)
 #response = urllib.urlopen(req)
 
-if (len(comp_err_file.read()) == 0):
-	# compilation success
-	os.system("/opt/pbs/default/bin/qsub -P cse -N Test1 -lselect=1:ncpus=21:mem=24gb -l walltime=00:15:00 run1.sh")
-	os.system("/opt/pbs/default/bin/qsub -P cse -N Test2 -lselect=1:ncpus=21:mem=24gb -l walltime=00:15:00 run2.sh")
-	os.system("/opt/pbs/default/bin/qsub -P cse -N Test3 -lselect=1:ncpus=21:mem=24gb -l walltime=00:15:00 run3.sh")
-	os.system("/opt/pbs/default/bin/qsub -P cse -N Test4 -lselect=1:ncpus=21:mem=24gb -l walltime=00:15:00 run4.sh")
-	os.system("/opt/pbs/default/bin/qsub -P cse -N Test5 -lselect=1:ncpus=21:mem=24gb -l walltime=00:15:00 run5.sh")
-	os.system("/opt/pbs/default/bin/qsub -P cse -N sendStatus -lselect=1:ncpus=21:mem=24gb -l walltime=00:15:00 SendStatus.sh")
+os.system("/opt/pbs/default/bin/qsub -P cse -N Test1 -lselect=1:ncpus=21:mem=24gb -l walltime=00:15:00 run1.sh")
+os.system("/opt/pbs/default/bin/qsub -P cse -N Test2 -lselect=1:ncpus=21:mem=24gb -l walltime=00:15:00 run2.sh")
+os.system("/opt/pbs/default/bin/qsub -P cse -N Test3 -lselect=1:ncpus=21:mem=24gb -l walltime=00:15:00 run3.sh")
+os.system("/opt/pbs/default/bin/qsub -P cse -N Test4 -lselect=1:ncpus=21:mem=24gb -l walltime=00:15:00 run4.sh")
+os.system("/opt/pbs/default/bin/qsub -P cse -N Test5 -lselect=1:ncpus=21:mem=24gb -l walltime=00:15:00 run5.sh")
+os.system("/opt/pbs/default/bin/qsub -P cse -N sendStatus -lselect=1:ncpus=21:mem=24gb -l walltime=00:15:00 SendStatus.sh")

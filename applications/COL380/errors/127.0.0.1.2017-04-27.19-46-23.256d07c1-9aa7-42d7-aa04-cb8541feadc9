@@ -1,0 +1,737 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.AttributeError'> 'Expression' object has no attribute 'tablename'"
+p3
+sS'layer'
+p4
+S'/home/rohit/Portal4COL380/applications/COL380/controllers/Upload.py'
+p5
+sS'code'
+p6
+S'# -*- coding: utf-8 -*-\n# try something like\nimport os\n\n@auth.requires_login()\ndef index():\n#     module_load_str = "export MODULEPATH=\'/usr/share/Modules/modulefiles:/etc/modulefiles:/opt/mellanox/bupc/2.18.0/modules:/home/soft/modules\' && /usr/bin/modulecmd bash load mpi/mpich/3.1.4/gcc/mpivars && /usr/bin/modulecmd bash load compiler/cuda/8.0/compilervars && /usr/bin/modulecmd bash load compiler/gcc/5.1.0/compilervars"\n    form = SQLFORM(db.UploadDB)\n    form.vars.Name= auth.user.first_name+\' \'+auth.user.last_name\n    if form.process().accepted:\n        response.flash = \'form accepted\'\n        # print the file name\n        print form.vars.TarFile\n        # Extracting Files\n        os.system("cd applications/COL380/uploads/ && mkdir "+ form.vars.TarFile[:-7] + \' && tar -xvzf \'+ form.vars.TarFile + \' -C \'+ form.vars.TarFile[:-7] )\n        # Update the folder according to the problem statement\n        os.system("cd applications/COL380/uploads/ && bash Main.sh "+form.vars.TarFile[:-7] +" "+ form.vars.TarFile)\n        # Copy the folder to hpc\n        os.system("cd applications/COL380/uploads/ && scp -r " + form.vars.TarFile[:-7] + " cs5120284@hpc.iitd.ac.in:~/"+form.vars.TarFile[:-7])\n        # Compile on hpc\n        print \'ssh cs5120284@hpc.iitd.ac.in "source /etc/profile; cd \'+ form.vars.TarFile[:-7] +\' && bash compile.sh > compile.o 2> compile.e"\'\n        os.system(\'ssh cs5120284@hpc.iitd.ac.in "source /etc/profile; cd \'+ form.vars.TarFile[:-7] +\' && bash compile.sh > compile.o 2> compile.e"\')\n        # Start Jobs on hpc\n        print \'ssh cs5120284@hpc.iitd.ac.in "cd \'+ form.vars.TarFile[:-7] +\' && python run.py \'+form.vars.TarFile+\'"\'\n        redirect(URL(\'Next\', args=(form.vars.TarFile)))\n    elif form.errors:\n        response.flash = \'form has errors\'\n    return locals()\n\ndef Next():\n    os.system(\'ssh cs5120284@hpc.iitd.ac.in "cd \'+ request.args[0][:-7] +\' && python run.py \'+request.args[0]+\'"\')\n    redirect(URL(\'Manage\'))\n\n\ndef ScoreBoard():\n    grid = SQLFORM.grid(db.UploadDB,deletable=False,editable=False,details=False,create=False,fields=[db.UploadDB.Name,db.UploadDB.Score.max(),db.UploadDB.Status,db.UploadDB.SubmissionTime], groupby=db.UploadDB.UserId)\n    return locals()\n\n@auth.requires_login()\ndef Manage():\n    grid = SQLFORM.grid(db.UploadDB.UserId==auth.user_id,deletable=False,editable=False,create=False)\n    return locals()\n\nresponse._vars=response._caller(ScoreBoard)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+S'exception'
+p10
+(dp11
+S'__hash__'
+p12
+S"<method-wrapper '__hash__' of exceptions.AttributeError object>"
+p13
+sS'__setattr__'
+p14
+S"<method-wrapper '__setattr__' of exceptions.AttributeError object>"
+p15
+sS'__reduce_ex__'
+p16
+S'<built-in method __reduce_ex__ of exceptions.AttributeError object>'
+p17
+sS'__getslice__'
+p18
+S"<method-wrapper '__getslice__' of exceptions.AttributeError object>"
+p19
+sS'__getitem__'
+p20
+S"<method-wrapper '__getitem__' of exceptions.AttributeError object>"
+p21
+sS'__setstate__'
+p22
+S'<built-in method __setstate__ of exceptions.AttributeError object>'
+p23
+sS'args'
+p24
+S'("\'Expression\' object has no attribute \'tablename\'",)'
+p25
+sS'__reduce__'
+p26
+S'<built-in method __reduce__ of exceptions.AttributeError object>'
+p27
+sS'__str__'
+p28
+S"<method-wrapper '__str__' of exceptions.AttributeError object>"
+p29
+sS'__format__'
+p30
+S'<built-in method __format__ of exceptions.AttributeError object>'
+p31
+sS'__getattribute__'
+p32
+S"<method-wrapper '__getattribute__' of exceptions.AttributeError object>"
+p33
+sS'__class__'
+p34
+S"<type 'exceptions.AttributeError'>"
+p35
+sS'__unicode__'
+p36
+S'<built-in method __unicode__ of exceptions.AttributeError object>'
+p37
+sS'__delattr__'
+p38
+S"<method-wrapper '__delattr__' of exceptions.AttributeError object>"
+p39
+sS'__subclasshook__'
+p40
+S'<built-in method __subclasshook__ of type object>'
+p41
+sS'__repr__'
+p42
+S"<method-wrapper '__repr__' of exceptions.AttributeError object>"
+p43
+sS'__dict__'
+p44
+S'{}'
+p45
+sS'__sizeof__'
+p46
+S'<built-in method __sizeof__ of exceptions.AttributeError object>'
+p47
+sS'__doc__'
+p48
+S"'Attribute not found.'"
+p49
+sS'__init__'
+p50
+S"<method-wrapper '__init__' of exceptions.AttributeError object>"
+p51
+sS'__new__'
+p52
+S'<built-in method __new__ of type object>'
+p53
+ssS'evalue'
+p54
+S"'Expression' object has no attribute 'tablename'"
+p55
+sS'request'
+p56
+cgluon.html
+XML_unpickle
+p57
+(S's\xf6\\\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">ajax</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">application</td><td style="vertical-align:top;">:</td><td><div>COL380</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cid</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">controller</td><td style="vertical-align:top;">:</td><td><div>Upload</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_admin</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-0f938874-740d-4404-ad8b-44c747fe83b4<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_col380</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-2e7bc7a5-6daf-4667-b6a7-76fe0c18d73b<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_welcome</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-306509bc-b5e4-4e15-ab69-08b8d1ee690d<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">env</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT</td><td style="vertical-align:top;">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_ENCODING</td><td style="vertical-align:top;">:</td><td><div>gzip, deflate, sdch</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_ACCEPT_LANGUAGE</td><td style="vertical-align:top;">:</td><td><div>en-US,en;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CACHE_CONTROL</td><td style="vertical-align:top;">:</td><td><div>max-age=0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_CONNECTION</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_COOKIE</td><td style="vertical-align:top;">:</td><td><div>session_id_welcome=127.0.0.1-306509bc-b5e4-4e15-ab69-08b8d1ee690d; session_id_col380=127.0.0.1-2e7bc7a5-6daf-4667-b6a7-76fe0c18d73b; session_id_admin=127.0.0.1-0f938874-740d-4404-ad8b-44c747fe83b4</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_HOST</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_REFERER</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000/COL380/Upload/Manage</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_UPGRADE_INSECURE_REQUESTS</td><td style="vertical-align:top;">:</td><td><div>1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">HTTP_USER_AGENT</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/53.0.2785.143 Chrome/53.0.2785.143 Safari/537.36</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">PATH_INFO</td><td style="vertical-align:top;">:</td><td><div>/COL380/Upload/ScoreBoard</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">QUERY_STRING</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_ADDR</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REMOTE_PORT</td><td style="vertical-align:top;">:</td><td><div>55098</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">REQUEST_METHOD</td><td style="vertical-align:top;">:</td><td><div>GET</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SCRIPT_NAME</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_NAME</td><td style="vertical-align:top;">:</td><td><div>rohit-Inspiron-5520</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PORT</td><td style="vertical-align:top;">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_PROTOCOL</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">SERVER_SOFTWARE</td><td style="vertical-align:top;">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;/home/rohit/Portal4COL380/applications/COL380/&#x27;, &#x27;/home/rohit/Portal4COL380/applications/welcome/&#x27;, &#x27;/home/rohit/Portal4COL380/applications/admin/&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>/home/rohit/Portal4COL380</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_options</td><td style="vertical-align:top;">:</td><td><div>&lt;Values at 0x7f6783973680: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;with_scheduler&#x27;: False, &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;rohit-Inspiron-5520&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: False, &#x27;port&#x27;: 8000, &#x27;print_errors&#x27;: False, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;/home/rohit/Portal4COL380&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;minthreads&#x27;: None, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;profiler_dir&#x27;: None, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;interfaces&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;gae&#x27;: None, &#x27;password&#x27;: &#x27;******&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;import_models&#x27;: False, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>/home/rohit/Portal4COL380</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept</td><td style="vertical-align:top;">:</td><td><div>text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_encoding</td><td style="vertical-align:top;">:</td><td><div>gzip, deflate, sdch</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_accept_language</td><td style="vertical-align:top;">:</td><td><div>en-US,en;q=0.8</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_cache_control</td><td style="vertical-align:top;">:</td><td><div>max-age=0</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_connection</td><td style="vertical-align:top;">:</td><td><div>keep-alive</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_cookie</td><td style="vertical-align:top;">:</td><td><div>session_id_welcome=127.0.0.1-306509bc-b5e4-4e15-ab69-08b8d1ee690d; session_id_col380=127.0.0.1-2e7bc7a5-6daf-4667-b6a7-76fe0c18d73b; session_id_admin=127.0.0.1-0f938874-740d-4404-ad8b-44c747fe83b4</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_host</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1:8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_referer</td><td style="vertical-align:top;">:</td><td><div>http://127.0.0.1:8000/COL380/Upload/Manage</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_upgrade_insecure_requests</td><td style="vertical-align:top;">:</td><td><div>1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">http_user_agent</td><td style="vertical-align:top;">:</td><td><div>Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/53.0.2785.143 Chrome/53.0.2785.143 Safari/537.36</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>::1</div></td></tr><tr><td><div>127.0.1.1</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>127.0.0.1</div></td></tr><tr><td><div>rohit-Inspiron-5520</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path_info</td><td style="vertical-align:top;">:</td><td><div>/COL380/Upload/ScoreBoard</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">query_string</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_addr</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remote_port</td><td style="vertical-align:top;">:</td><td><div>55098</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_method</td><td style="vertical-align:top;">:</td><td><div>GET</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">request_uri</td><td style="vertical-align:top;">:</td><td><div>/COL380/Upload/ScoreBoard</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">script_name</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_name</td><td style="vertical-align:top;">:</td><td><div>rohit-Inspiron-5520</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_port</td><td style="vertical-align:top;">:</td><td><div>8000</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_protocol</td><td style="vertical-align:top;">:</td><td><div>HTTP/1.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">server_software</td><td style="vertical-align:top;">:</td><td><div>Rocket 1.2.6</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_path</td><td style="vertical-align:top;">:</td><td><div>/home/rohit/Portal4COL380</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.14.6-stable+timestamp.2016.05.10.00.21.47</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.errors</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0x7f678b7241e0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x7f6783a1cdb8&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.input</td><td style="vertical-align:top;">:</td><td><div>&lt;socket._fileobject object at 0x7f67480ff050&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.url_scheme</td><td style="vertical-align:top;">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi.version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_errors</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;&lt;stderr&gt;&#x27;, mode &#x27;w&#x27; at 0x7f678b7241e0&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_file_wrapper</td><td style="vertical-align:top;">:</td><td><div>&lt;class wsgiref.util.FileWrapper at 0x7f6783a1cdb8&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_input</td><td style="vertical-align:top;">:</td><td><div>&lt;socket._fileobject object at 0x7f67480ff050&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multiprocess</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_multithread</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_run_once</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_url_scheme</td><td style="vertical-align:top;">:</td><td><div>http</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi_version</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>1</div></td></tr><tr><td><div>0</div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">extension</td><td style="vertical-align:top;">:</td><td><div>html</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">folder</td><td style="vertical-align:top;">:</td><td><div>/home/rohit/Portal4COL380/applications/COL380/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">function</td><td style="vertical-align:top;">:</td><td><div>ScoreBoard</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">global_settings</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">app_folders</td><td style="vertical-align:top;">:</td><td><div>set([&#x27;/home/rohit/Portal4COL380/applications/COL380/&#x27;, &#x27;/home/rohit/Portal4COL380/applications/welcome/&#x27;, &#x27;/home/rohit/Portal4COL380/applications/admin/&#x27;])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">applications_parent</td><td style="vertical-align:top;">:</td><td><div>/home/rohit/Portal4COL380</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_args</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cmd_options</td><td style="vertical-align:top;">:</td><td><div>&lt;Values at 0x7f6783973680: {&#x27;verbose&#x27;: False, &#x27;ip&#x27;: &#x27;127.0.0.1&#x27;, &#x27;debuglevel&#x27;: 30, &#x27;with_scheduler&#x27;: False, &#x27;shutdown_timeout&#x27;: 5, &#x27;taskbar&#x27;: False, &#x27;with_coverage&#x27;: False, &#x27;pid_filename&#x27;: &#x27;httpserver.pid&#x27;, &#x27;maxthreads&#x27;: None, &#x27;softcron&#x27;: False, &#x27;server_name&#x27;: &#x27;rohit-Inspiron-5520&#x27;, &#x27;bpython&#x27;: False, &#x27;nogui&#x27;: False, &#x27;port&#x27;: 8000, &#x27;print_errors&#x27;: False, &#x27;extcron&#x27;: False, &#x27;runcron&#x27;: False, &#x27;run_system_tests&#x27;: False, &#x27;test&#x27;: None, &#x27;folder&#x27;: &#x27;/home/rohit/Portal4COL380&#x27;, &#x27;config&#x27;: &#x27;&#x27;, &#x27;minthreads&#x27;: None, &#x27;shell&#x27;: None, &#x27;run&#x27;: &#x27;&#x27;, &#x27;log_filename&#x27;: &#x27;httpserver.log&#x27;, &#x27;profiler_dir&#x27;: None, &#x27;args&#x27;: [&#x27;&#x27;], &#x27;socket_timeout&#x27;: 5, &#x27;ssl_ca_certificate&#x27;: None, &#x27;scheduler&#x27;: None, &#x27;interfaces&#x27;: None, &#x27;ssl_private_key&#x27;: &#x27;&#x27;, &#x27;gae&#x27;: None, &#x27;password&#x27;: &#x27;******&#x27;, &#x27;request_queue_size&#x27;: 5, &#x27;ssl_certificate&#x27;: &#x27;&#x27;, &#x27;cronjob&#x27;: False, &#x27;numthreads&#x27;: None, &#x27;quiet&#x27;: False, &#x27;import_models&#x27;: False, &#x27;timeout&#x27;: 10, &#x27;plain&#x27;: False, &#x27;nobanner&#x27;: False}&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">db_sessions</td><td style="vertical-align:top;">:</td><td><div>set([])</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">debugging</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">gluon_parent</td><td style="vertical-align:top;">:</td><td><div>/home/rohit/Portal4COL380</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_jython</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_pypy</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_source</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">local_hosts</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>::1</div></td></tr><tr><td><div>127.0.1.1</div></td></tr><tr><td><div>::ffff:127.0.0.1</div></td></tr><tr><td><div>127.0.0.1</div></td></tr><tr><td><div>rohit-Inspiron-5520</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">web2py_version</td><td style="vertical-align:top;">:</td><td><div>2.14.6-stable+timestamp.2016.05.10.00.21.47</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_https</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_local</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_restful</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_scheduler</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">is_shell</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">now</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2017, 4, 27, 19, 46, 23, 937215)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_args</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">raw_extension</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">url</td><td style="vertical-align:top;">:</td><td><div>/COL380/Upload/ScoreBoard</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">utcnow</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2017, 4, 27, 14, 16, 23, 937250)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">wsgi</td><td style="vertical-align:top;">:</td><td><div>&lt;gluon.main.LazyWSGI object at 0x7f67486f9690&gt;</div></td></tr></table></div>'
+tRp58
+sS'frames'
+p59
+(lp60
+(dp61
+S'file'
+p62
+S'/home/rohit/Portal4COL380/gluon/restricted.py'
+p63
+sS'dump'
+p64
+(dp65
+S'environment'
+p66
+S"{'A': <class 'gluon.html.A'>, 'ANY_OF': <class 'gluon.validators.ANY_OF'>, 'ASSIGNJS': <function ASSIGNJS>, 'AppConfig': <function AppConfig>, 'Auth': <class 'gluon.tools.Auth'>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BR': <class 'gluon.html.BR'>, 'BUTTON': <class 'gluon.html.BUTTON'>, ...}"
+p67
+sS'ccode'
+p68
+S'<code object <module> at 0x7f67480ff3b0, file "/...plications/COL380/controllers/Upload.py", line 3>'
+p69
+ssS'lnum'
+p70
+I227
+sS'lines'
+p71
+(dp72
+I224
+S'            ccode = code'
+p73
+sI225
+S'        else:'
+p74
+sI226
+S'            ccode = compile2(code, layer)'
+p75
+sI227
+S'        exec ccode in environment'
+p76
+sI228
+S'    except HTTP:'
+p77
+sI229
+S'        raise'
+p78
+sI230
+S'    except RestrictedError:'
+p79
+sI231
+S'        # do not encapsulate (obfuscate) the original RestrictedError'
+p80
+sI222
+S'    try:'
+p81
+sI223
+S'        if isinstance(code, types.CodeType):'
+p82
+ssS'call'
+p83
+S"(code='# -*- coding: utf-8 -*-\\n# try something like\\nimp...s()\\n\\nresponse._vars=response._caller(ScoreBoard)\\n', environment={'A': <class 'gluon.html.A'>, 'ANY_OF': <class 'gluon.validators.ANY_OF'>, 'ASSIGNJS': <function ASSIGNJS>, 'AppConfig': <function AppConfig>, 'Auth': <class 'gluon.tools.Auth'>, 'B': <class 'gluon.html.B'>, 'BEAUTIFY': <class 'gluon.html.BEAUTIFY'>, 'BODY': <class 'gluon.html.BODY'>, 'BR': <class 'gluon.html.BR'>, 'BUTTON': <class 'gluon.html.BUTTON'>, ...}, layer='/home/rohit/Portal4COL380/applications/COL380/controllers/Upload.py')"
+p84
+sS'func'
+p85
+S'restricted'
+p86
+sa(dp87
+g62
+S'/home/rohit/Portal4COL380/applications/COL380/controllers/Upload.py'
+p88
+sg64
+(dp89
+sg70
+I44
+sg71
+(dp90
+I33
+S''
+sI34
+S''
+sI35
+S'def ScoreBoard():'
+p91
+sI36
+S'    grid = SQLFORM.grid(db.UploadDB,deletable=False,editable=False,details=False,create=False,fields=[db.UploadDB.Name,db.UploadDB.Score.max(),db.UploadDB.Status,db.UploadDB.SubmissionTime], groupby=db.UploadDB.UserId)'
+p92
+sI37
+S'    return locals()'
+p93
+sI38
+S''
+sI39
+S'@auth.requires_login()'
+p94
+sI40
+S'def Manage():'
+p95
+sI41
+S'    grid = SQLFORM.grid(db.UploadDB.UserId==auth.user_id,deletable=False,editable=False,create=False)'
+p96
+sI42
+S'    return locals()'
+p97
+ssg83
+S'()'
+p98
+sg85
+S'<module>'
+p99
+sa(dp100
+g62
+S'/home/rohit/Portal4COL380/gluon/globals.py'
+p101
+sg64
+(dp102
+S'self'
+p103
+S'undefined'
+p104
+sS'f'
+S'<function ScoreBoard>'
+p105
+ssg70
+I417
+sg71
+(dp106
+I416
+S'        self._vars = None'
+p107
+sI417
+S'        self._caller = lambda f: f()'
+p108
+sI418
+S'        self._view_environment = None'
+p109
+sI419
+S'        self._custom_commit = None'
+p110
+sI420
+S'        self._custom_rollback = None'
+p111
+sI421
+S"        self.generic_patterns = ['*']"
+p112
+sI412
+S"        self.flash = ''            # used by the default view layout"
+p113
+sI413
+S'        self.meta = Storage()      # used by web2py_ajax.html'
+p114
+sI414
+S'        self.menu = []             # used by the default view layout'
+p115
+sI415
+S'        self.files = []            # used by web2py_ajax.html'
+p116
+ssg83
+S'(f=<function ScoreBoard>)'
+p117
+sg85
+S'<lambda>'
+p118
+sa(dp119
+g62
+S'/home/rohit/Portal4COL380/applications/COL380/controllers/Upload.py'
+p120
+sg64
+(dp121
+S'db.UploadDB.Score'
+p122
+S'<pydal.objects.Field object>'
+p123
+sS'db.UploadDB.Score.max'
+p124
+S'<bound method Field.max of <pydal.objects.Field object>>'
+p125
+sS'db.UploadDB'
+p126
+S'<Table UploadDB (id, UserId, Name, TarFile, Comp..., TestCase1Log, TestCase1Error, Console, Status)>'
+p127
+sS'db.UploadDB.Name'
+p128
+S'<pydal.objects.Field object>'
+p129
+sS'builtinFalse'
+p130
+S'False'
+p131
+sS'db.UploadDB.Status'
+p132
+S'<pydal.objects.Field object>'
+p133
+sS'SQLFORM.grid'
+p134
+S'<function grid>'
+p135
+sS'global SQLFORM'
+p136
+S"<class 'gluon.sqlhtml.SQLFORM'>"
+p137
+sS'create'
+p138
+g104
+sS'editable'
+p139
+g104
+sS'grid'
+p140
+g104
+sS'deletable'
+p141
+g104
+sS'db.UploadDB.UserId'
+p142
+S'<pydal.objects.Field object>'
+p143
+sS'fields'
+p144
+g104
+sS'global db'
+p145
+S'<DAL uri="sqlite://storage.sqlite">'
+p146
+sS'db.UploadDB.SubmissionTime'
+p147
+S'<pydal.objects.Field object>'
+p148
+sS'groupby'
+p149
+g104
+sS'details'
+p150
+g104
+ssg70
+I36
+sg71
+(dp151
+I32
+S"    redirect(URL('Manage'))"
+p152
+sI33
+S''
+sI34
+S''
+sI35
+S'def ScoreBoard():'
+p153
+sI36
+S'    grid = SQLFORM.grid(db.UploadDB,deletable=False,editable=False,details=False,create=False,fields=[db.UploadDB.Name,db.UploadDB.Score.max(),db.UploadDB.Status,db.UploadDB.SubmissionTime], groupby=db.UploadDB.UserId)'
+p154
+sI37
+S'    return locals()'
+p155
+sI38
+S''
+sI39
+S'@auth.requires_login()'
+p156
+sI40
+S'def Manage():'
+p157
+sI31
+S'    os.system(\'ssh cs5120284@hpc.iitd.ac.in "cd \'+ request.args[0][:-7] +\' && python run.py \'+request.args[0]+\'"\')'
+p158
+ssg83
+S'()'
+p159
+sg85
+S'ScoreBoard'
+p160
+sa(dp161
+g62
+S'/home/rohit/Portal4COL380/gluon/sqlhtml.py'
+p162
+sg64
+(dp163
+S'fields'
+p164
+S'[<pydal.objects.Field object>, <pydal.objects.Expression object>, <pydal.objects.Field object>, <pydal.objects.Field object>]'
+p165
+sS'f.tablename'
+p166
+g104
+sS'tablenames'
+p167
+S"['UploadDB']"
+p168
+sS'columns'
+p169
+g104
+sS'f'
+S'<pydal.objects.Expression object>'
+p170
+ssg70
+I2227
+sg71
+(dp171
+I2222
+S'            # add missing tablename to virtual fields'
+p172
+sI2223
+S'            for table in tables:'
+p173
+sI2224
+S'                for k, f in table.iteritems():'
+p174
+sI2225
+S'                    if isinstance(f, Field.Virtual):'
+p175
+sI2226
+S'                        f.tablename = table._tablename'
+p176
+sI2227
+S'            columns = [f for f in fields if f.tablename in tablenames]'
+p177
+sI2228
+S'        else:'
+p178
+sI2229
+S'            fields = []'
+p179
+sI2230
+S'            columns = []'
+p180
+sI2231
+S"            filter1 = lambda f: isinstance(f, Field) and f.type != 'blob'"
+p181
+ssg83
+S"(query=<Table UploadDB (id, UserId, Name, TarFile, Comp..., TestCase1Log, TestCase1Error, Console, Status)>, fields=[<pydal.objects.Field object>, <pydal.objects.Expression object>, <pydal.objects.Field object>, <pydal.objects.Field object>], field_id=None, left=None, headers={}, orderby=None, groupby=<pydal.objects.Field object>, searchable=True, sortable=True, paginate=20, deletable=False, editable=False, details=False, selectable=None, create=False, csv=True, links=None, links_in_grid=True, upload='<default>', args=[], user_signature=True, maxtextlengths={}, maxtextlength=20, onvalidation=None, onfailure=None, oncreate=None, onupdate=None, ondelete=None, sorter_icons=(<gluon.html.XML object>, <gluon.html.XML object>), ui={'button': 'button btn btn-default', 'buttonadd': 'icon plus icon-plus glyphicon glyphicon-plus', 'buttonback': 'icon leftarrow icon-arrow-left glyphicon glyphicon-arrow-left', 'buttondelete': 'icon trash icon-trash glyphicon glyphicon-trash', 'buttonedit': 'icon pen icon-pencil glyphicon glyphicon-pencil', 'buttonexport': 'icon downarrow icon-download glyphicon glyphicon-download', 'buttontable': 'icon rightarrow icon-arrow-right glyphicon glyphicon-arrow-right', 'buttontext': 'buttontext button', 'buttonview': 'icon magnifier icon-zoom-in glyphicon glyphicon-zoom-in', 'content': '', ...}, showbuttontext=True, _class='web2py_grid', formname='web2py_grid', search_widget='default', advanced_search=True, ignore_rw=False, formstyle='bootstrap3_inline', exportclasses=None, formargs={}, createargs={}, editargs={}, viewargs={}, selectable_submit_button='Submit', buttons_placement='right', links_placement='right', noconfirm=False, cache_count=None, client_side_delete=False, ignore_common_filters=None, auto_pagination=True, use_cursor=False)"
+p182
+sg85
+S'grid'
+p183
+sasS'pyver'
+p184
+S'Python 2.7.6: /usr/bin/python (prefix: /usr)'
+p185
+sS'session'
+p186
+g57
+(S's\xef\x08\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">auth</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">expiration</td><td style="vertical-align:top;">:</td><td><div>3600</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">hmac_key</td><td style="vertical-align:top;">:</td><td><div>198c6dbc-4aae-4ffc-9c1f-557a6654c2c9</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">last_visit</td><td style="vertical-align:top;">:</td><td><div>datetime.datetime(2017, 4, 27, 19, 44, 57, 304806)</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">remember_me</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">user</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">email</td><td style="vertical-align:top;">:</td><td><div>rohitpruthi95@gmail.com</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">first_name</td><td style="vertical-align:top;">:</td><td><div>Rohit</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">id</td><td style="vertical-align:top;">:</td><td><div>2L</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">last_name</td><td style="vertical-align:top;">:</td><td><div>Pruthi</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">registration_id</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">registration_key</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">reset_password_key</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">user_groups</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">2</td><td style="vertical-align:top;">:</td><td><div>user_2</div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">flash</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr></table></div>'
+tRp187
+sS'etype'
+p188
+S"<type 'exceptions.AttributeError'>"
+p189
+sS'date'
+p190
+S'Thu Apr 27 19:46:24 2017'
+p191
+sS'response'
+p192
+g57
+(S's\xed\x1e\x00\x00<div><table><tr><td style="font-weight:bold;vertical-align:top;">body</td><td style="vertical-align:top;">:</td><td><div>&lt;cStringIO.StringO object at 0x7f67480cf420&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">cookies</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">session_id_col380</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-2e7bc7a5-6daf-4667-b6a7-76fe0c18d73b<table><tr><td style="font-weight:bold;vertical-align:top;">comment</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">domain</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">expires</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">httponly</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">max-age</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">path</td><td style="vertical-align:top;">:</td><td><div>/</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">secure</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">version</td><td style="vertical-align:top;">:</td><td><div></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">delimiters</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>{{</div></td></tr><tr><td><div>}}</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">files</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">flash</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">form_label_separator</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">formstyle</td><td style="vertical-align:top;">:</td><td><div>bootstrap3_inline</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">generic_patterns</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>*</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">google_analytics_id</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">headers</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">X-Powered-By</td><td style="vertical-align:top;">:</td><td><div>web2py</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">logo</td><td style="vertical-align:top;">:</td><td><div><a class="navbar-brand"><b>COL380</b></a></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">menu</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div><table><tr><td><div>Upload</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/COL380/Upload/index</div></td></tr><tr><td><div><table></table></div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div>Score Board</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/COL380/Upload/ScoreBoard</div></td></tr><tr><td><div><table></table></div></td></tr></table></div></td></tr><tr><td><div><table><tr><td><div>My Submissions</div></td></tr><tr><td><div>False</div></td></tr><tr><td><div>/COL380/Upload/Manage</div></td></tr><tr><td><div><table></table></div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">meta</td><td style="vertical-align:top;">:</td><td><div><table><tr><td style="font-weight:bold;vertical-align:top;">author</td><td style="vertical-align:top;">:</td><td><div>Your Name &lt;you@example.com&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">description</td><td style="vertical-align:top;">:</td><td><div>a cool new app</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">generator</td><td style="vertical-align:top;">:</td><td><div>Web2py Web Framework</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">keywords</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>web2py</div></td></tr><tr><td><div>python</div></td></tr><tr><td><div>framework</div></td></tr></table></div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">models_to_run</td><td style="vertical-align:top;">:</td><td><div><table><tr><td><div>^\\w+\\.py$</div></td></tr><tr><td><div>^Upload/\\w+\\.py$</div></td></tr><tr><td><div>^Upload/ScoreBoard/\\w+\\.py$</div></td></tr></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">postprocessing</td><td style="vertical-align:top;">:</td><td><div><table></table></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_client</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_compression_level</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_cookie_expires</td><td style="vertical-align:top;">:</td><td><div>None</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_data_name</td><td style="vertical-align:top;">:</td><td><div>session_data_col380</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_file</td><td style="vertical-align:top;">:</td><td><div>&lt;open file &#x27;/home/rohit/Portal4COL380/applications/COL380/sessions/0a5/1f0/127.0.0.1-2e7bc7a5-6daf-4667-b6a7-76fe0c18d73b&#x27;, mode &#x27;rb+&#x27; at 0x7f67480d0930&gt;</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_filename</td><td style="vertical-align:top;">:</td><td><div>/home/rohit/Portal4COL380/applications/COL380/sessions/127.0.0.1-2e7bc7a5-6daf-4667-b6a7-76fe0c18d73b</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_hash</td><td style="vertical-align:top;">:</td><td><div>246debf5a6465cb9bad12ea9eb8ef5f4</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id</td><td style="vertical-align:top;">:</td><td><div>127.0.0.1-2e7bc7a5-6daf-4667-b6a7-76fe0c18d73b</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_id_name</td><td style="vertical-align:top;">:</td><td><div>session_id_col380</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_locked</td><td style="vertical-align:top;">:</td><td><div>True</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_masterapp</td><td style="vertical-align:top;">:</td><td><div>COL380</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_new</td><td style="vertical-align:top;">:</td><td><div>False</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">session_storage_type</td><td style="vertical-align:top;">:</td><td><div>file</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">status</td><td style="vertical-align:top;">:</td><td><div>200</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">subtitle</td><td style="vertical-align:top;">:</td><td><div></div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">title</td><td style="vertical-align:top;">:</td><td><div>Col380</div></td></tr><tr><td style="font-weight:bold;vertical-align:top;">view</td><td style="vertical-align:top;">:</td><td><div>Upload/ScoreBoard.html</div></td></tr></table></div>'
+tRp193
+sS'locals'
+p194
+(dp195
+S'editargs'
+p196
+g45
+sS'tablenames'
+p197
+S"['UploadDB']"
+p198
+sS'links'
+p199
+S'None'
+p200
+sS'fetch_count'
+p201
+S'<function fetch_count>'
+p202
+sS'tablename'
+p203
+S"'UploadDB'"
+p204
+sS'paginate'
+p205
+S'20'
+p206
+sS'advanced_search'
+p207
+S'True'
+p208
+sS'upload'
+p209
+S"'<default>'"
+p210
+sS'noconfirm'
+p211
+g131
+sS'keywords'
+p212
+S"''"
+p213
+sS'sorter_icons'
+p214
+S'(<gluon.html.XML object>, <gluon.html.XML object>)'
+p215
+sg186
+S"<Storage {'_auth_next': None, 'flash': None, 'au...c20f3', '50c83c92-ee67-4055-8209-8e4faab480fa']}>"
+p216
+sS'query'
+p217
+S'<Table UploadDB (id, UserId, Name, TarFile, Comp..., TestCase1Log, TestCase1Error, Console, Status)>'
+p218
+sS'viewargs'
+p219
+g45
+sS'cache_count'
+p220
+S'None'
+p221
+sS'selectable_submit_button'
+p222
+S"'Submit'"
+p223
+sS'client_side_delete'
+p224
+g131
+sS'formstyle'
+p225
+S"'bootstrap3_inline'"
+p226
+sS'fix_orderby'
+p227
+S'<function fix_orderby>'
+p228
+sS'maxtextlength'
+p229
+S'20'
+p230
+sS'rows'
+p231
+S'None'
+p232
+sS'searchable'
+p233
+g208
+sS'createargs'
+p234
+g45
+sS'create'
+p235
+g131
+sS'logged'
+p236
+S"<Row {'first_name': 'Rohit', 'last_name': 'Pruth...on_key': '', 'email': 'rohitpruthi95@gmail.com'}>"
+p237
+sS'formargs'
+p238
+g45
+sS'maxtextlengths'
+p239
+g45
+sS'ignore_rw'
+p240
+g131
+sS'user_signature'
+p241
+g208
+sS'details'
+p242
+g131
+sS'onvalidation'
+p243
+S'None'
+p244
+sS'url2'
+p245
+S'<function url2>'
+p246
+sS'editable'
+p247
+g131
+sS'_class'
+p248
+S"'web2py_grid'"
+p249
+sS'auto_pagination'
+p250
+g208
+sS'ondelete'
+p251
+S'None'
+p252
+sS'ignore_common_filters'
+p253
+S'None'
+p254
+sS'onfailure'
+p255
+S'None'
+p256
+sS'tables'
+p257
+S'[<Table UploadDB (id, UserId, Name, TarFile, Comp..., TestCase1Log, TestCase1Error, Console, Status)>]'
+p258
+sS'use_cursor'
+p259
+g131
+sS'field_id'
+p260
+S'None'
+p261
+sg24
+S'[]'
+p262
+sS'db'
+p263
+S'<DAL uri="sqlite://storage.sqlite">'
+p264
+sS'deletable'
+p265
+g131
+sS'gridbutton'
+p266
+S'<function gridbutton>'
+p267
+sS'links_in_grid'
+p268
+g208
+sS'selectable'
+p269
+S'None'
+p270
+sS'table'
+p271
+S'<Table UploadDB (id, UserId, Name, TarFile, Comp..., TestCase1Log, TestCase1Error, Console, Status)>'
+p272
+sg192
+S"<Storage {'body': <cStringIO.StringO object at 0...7f67480f9e60>, 'view': 'Upload/ScoreBoard.html'}>"
+p273
+sS'formname'
+p274
+S"'web2py_grid'"
+p275
+sS'orderby'
+p276
+S'None'
+p277
+sS'dbset'
+p278
+S'<Set (UploadDB.id IS NOT NULL)>'
+p279
+sS'sortable'
+p280
+g208
+sS'left'
+p281
+S'None'
+p282
+sS'onupdate'
+p283
+S'None'
+p284
+sS'url'
+p285
+S'<function url>'
+p286
+sS'fields'
+p287
+S'[<pydal.objects.Field object>, <pydal.objects.Expression object>, <pydal.objects.Field object>, <pydal.objects.Field object>]'
+p288
+sS'k'
+S"'TarFile'"
+p289
+sS'f'
+S'<pydal.objects.Expression object>'
+p290
+sg56
+S"<Storage {'_vars': None, 'function': 'ScoreBoard.../home/rohit/Portal4COL380/applications/COL380/'}>"
+p291
+sS'wenabled'
+p292
+g131
+sS'T'
+S'<gluon.languages.translator object>'
+p293
+sS'groupby'
+p294
+S'<pydal.objects.Field object>'
+p295
+sS'headers'
+p296
+g45
+sS'buttons_placement'
+p297
+S"'right'"
+p298
+sS'ui'
+p299
+S"{'button': 'button btn btn-default', 'buttonadd': 'icon plus icon-plus glyphicon glyphicon-plus', 'buttonback': 'icon leftarrow icon-arrow-left glyphicon glyphicon-arrow-left', 'buttondelete': 'icon trash icon-trash glyphicon glyphicon-trash', 'buttonedit': 'icon pen icon-pencil glyphicon glyphicon-pencil', 'buttonexport': 'icon downarrow icon-download glyphicon glyphicon-download', 'buttontable': 'icon rightarrow icon-arrow-right glyphicon glyphicon-arrow-right', 'buttontext': 'buttontext button', 'buttonview': 'icon magnifier icon-zoom-in glyphicon glyphicon-zoom-in', 'content': '', ...}"
+p300
+sS'referrer'
+p301
+S"'/COL380/Upload/ScoreBoard?_signature=a6e5de695ae3487ff6cc983eb63f5b6d0fb7b7a8'"
+p302
+sS'links_placement'
+p303
+S"'right'"
+p304
+sS'oncreate'
+p305
+S'None'
+p306
+sS'search_widget'
+p307
+S"'default'"
+p308
+sS'csv'
+p309
+g208
+sS'exportclasses'
+p310
+S'None'
+p311
+sS'showbuttontext'
+p312
+g208
+sssS'traceback'
+p313
+S'Traceback (most recent call last):\n  File "/home/rohit/Portal4COL380/gluon/restricted.py", line 227, in restricted\n    exec ccode in environment\n  File "/home/rohit/Portal4COL380/applications/COL380/controllers/Upload.py", line 44, in <module>\n  File "/home/rohit/Portal4COL380/gluon/globals.py", line 417, in <lambda>\n    self._caller = lambda f: f()\n  File "/home/rohit/Portal4COL380/applications/COL380/controllers/Upload.py", line 36, in ScoreBoard\n    grid = SQLFORM.grid(db.UploadDB,deletable=False,editable=False,details=False,create=False,fields=[db.UploadDB.Name,db.UploadDB.Score.max(),db.UploadDB.Status,db.UploadDB.SubmissionTime], groupby=db.UploadDB.UserId)\n  File "/home/rohit/Portal4COL380/gluon/sqlhtml.py", line 2227, in grid\n    columns = [f for f in fields if f.tablename in tablenames]\nAttributeError: \'Expression\' object has no attribute \'tablename\'\n'
+p314
+s.

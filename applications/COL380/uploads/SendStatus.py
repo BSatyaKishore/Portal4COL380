@@ -3,27 +3,64 @@ import os
 import sys, urllib2, urllib
 
 #time.sleep(9000)
+score = 0
 
-E = str(sys.argv[1])+'.e'
-O = str(sys.argv[1])+'.o'
-comp_err_file = open(E, 'r')
-comp_err_str = comp_err_file.read()
-comp_out_file = open(O, 'r')
+fileName = str(sys.argv[1])
+comp_out_file = open("1.o")
 comp_out_str = comp_out_file.read()
-fileName = str(sys.argv[2])
+comp_err_file = open("1.e")
+comp_err_str = comp_err_file.read()
 
-if str(sys.argv[1]) == '1':
-	data = urllib.urlencode({'fileName':fileName,'O1':comp_out_str, 'E1':comp_err_str})
-	req = urllib.urlopen("http://10.201.136.172:8000/COL380/API/SendStatus1/", data)
-elif str(sys.argv[1]) == '2':
-	data = urllib.urlencode({'fileName':fileName,'O2':comp_out_str, 'E2':comp_err_str})
-	req = urllib.urlopen("http://10.201.136.172:8000/COL380/API/SendStatus2/", data)
-elif str(sys.argv[1]) == '3':
-	data = urllib.urlencode({'fileName':fileName,'O3':comp_out_str, 'E3':comp_err_str})
-	req = urllib.urlopen("http://10.201.136.172:8000/COL380/API/SendStatus3/", data)
-elif str(sys.argv[1]) == '4':
-	data = urllib.urlencode({'fileName':fileName,'O4':comp_out_str, 'E4':comp_err_str})
-	req = urllib.urlopen("http://10.201.136.172:8000/COL380/API/SendStatus4/", data)
-elif str(sys.argv[1]) == '5':
-	data = urllib.urlencode({'fileName':fileName,'O5':comp_out_str, 'E5':comp_err_str})
-	req = urllib.urlopen("http://10.201.136.172:8000/COL380/API/SendStatus5/", data)
+def compare(str1, str2):
+	str1 = str1.strip()
+	str2 = str2.strip()
+	str1_arr = str1.splitlines()
+	str2_arr = str2.splitlines()
+	if (len(str1_arr) != len(str2_arr)):
+		return False
+	for i in xrange(len(str1_arr)):
+		if (str1_arr[i].strip() != str2_arr[i].strip()):
+			return False
+	return True
+
+
+f_expected_1 = open("/home/cse/dual/cs5120284/output_1024.txt")
+f_expected_1_str = f_expected_1.read()
+f_actual_1 = open("output1.txt")
+f_actual_1_str = f_actual_1.read()
+
+f_expected_2 = open("/home/cse/dual/cs5120284/output_10000.txt")
+f_expected_2_str = f_expected_2.read()
+f_actual_2 = open("output2.txt")
+f_actual_2_str = f_actual_2.read()
+
+f_expected_3 = open("/home/cse/dual/cs5120284/output_20000.txt")
+f_expected_3_str = f_expected_3.read()
+f_actual_3 = open("output3.txt")
+f_actual_3_str = f_actual_3.read()
+
+f_expected_4 = open("/home/cse/dual/cs5120284/output_30000.txt")
+f_expected_4_str = f_expected_4.read()
+f_actual_4 = open("output4.txt")
+f_actual_4_str = f_actual_4.read()
+
+f_expected_5 = open("/home/cse/dual/cs5120284/output_40000.txt")
+f_expected_5_str = f_expected_5.read()
+f_actual_5 = open("output5.txt")
+f_actual_5_str = f_actual_5.read()
+
+if (compare(f_actual_1_str, f_expected_1_str)):
+	score += 1
+if (compare(f_actual_2_str, f_expected_2_str)):
+	score += 1
+if (compare(f_actual_3_str, f_expected_3_str)):
+	score += 1
+if (compare(f_actual_4_str, f_expected_4_str)):
+	score += 1
+if (compare(f_actual_5_str, f_expected_5_str)):
+	score += 1
+if (score > 0):
+	data = urllib.urlencode({'fileName':fileName,'O1':comp_out_str, 'E1':comp_err_str, 'status':1, 'score':score})
+else:
+	data = urllib.urlencode({'fileName':fileName,'O1':comp_out_str, 'E1':comp_err_str, 'status':0, 'score':0})
+req = urllib.urlopen("http://10.201.137.134:8000/COL380/API/SendStatus/", data)

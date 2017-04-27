@@ -1,0 +1,2 @@
+cd /home/cse/dual/cs5120284/UploadDB.TarFile.b80f931d8aab0072.6578616d706c655f6c6162352e7461722e/
+python sendStatus.py UploadDB.TarFile.b80f931d8aab0072.6578616d706c655f6c6162352e7461722e677a.gz
